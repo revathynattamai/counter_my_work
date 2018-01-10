@@ -57,6 +57,16 @@ const todos = (state = [], action) => {
           text: action.text,
           completed: false
         }];
+        case 'Toggle':
+        return state.map(todo=> {
+          if (action.id !== todo.id){
+            return todo;
+          }
+          return{
+            ...todo,
+            completed: !todo.completed
+          }
+        })
     default:
       return state;
   }
@@ -79,5 +89,44 @@ const addTodo = () => {
     todos(stateBefore, action)).eqls(stateAfter);
 }
 
+
+const toggleTodo = () => {
+  const stateBefore = [
+    {
+    id: 0,
+    text: "Anirud",
+    completed: false
+  },
+  {
+    id: 1,
+    text: "Aarudh",
+    completed: false
+  }
+]; 
+
+const action = {
+  type: 'Toggle',
+  id: 1
+}
+
+const stateAfter = [
+  {
+  id: 0,
+  text: "Anirud",
+  completed: false
+},
+{
+  id: 1,
+  text: "Aarudh",
+  completed: true
+}
+];
+
+expect(
+  todos(stateBefore,action)).eqls(stateAfter);
+
+}
+
 addTodo();
-console.log("PAssed");
+toggleTodo();
+console.log("Passed");
